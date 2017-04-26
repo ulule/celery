@@ -55,8 +55,8 @@ func (t *Task) MarshalJSON() ([]byte, error) {
 	type FormattedTask struct {
 		Task    string                 `json:"task"`
 		Id      string                 `json:"id"`
-		Args    []string               `json:"args,omitempty"`
-		KWArgs  map[string]interface{} `json:"kwargs,omitempty"`
+		Args    []string               `json:"args"`
+		KWArgs  map[string]interface{} `json:"kwargs"`
 		Retries int                    `json:"retries,omitempty"`
 		ETA     string                 `json:"eta,omitempty"`
 		Expires string                 `json:"expires,omitempty"`
