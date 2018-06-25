@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/nu7hatch/gouuid"
 	"github.com/streadway/amqp"
 )
 
