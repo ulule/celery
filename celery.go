@@ -7,9 +7,9 @@ package celery
 
 import (
 	"encoding/json"
-	"github.com/nu7hatch/gouuid"
-	"github.com/streadway/amqp"
 	"time"
+
+	"github.com/streadway/amqp"
 )
 
 // Celery task representation,
@@ -21,13 +21,14 @@ import (
 // ETA - optional time for a scheduled task,
 // Expires - optional time for task expiration
 type Task struct {
-	Task    string
-	Id      string
-	Args    []string
-	KWArgs  map[string]interface{}
-	Retries int
-	ETA     time.Time
-	Expires time.Time
+	Task      string
+	Id        string
+	Args      []string
+	Timelimit []string
+	KWArgs    map[string]interface{}
+	Retries   int
+	ETA       time.Time
+	Expires   time.Time
 }
 
 const timeFormat = "2006-01-02T15:04:05.999999"
@@ -53,21 +54,23 @@ func NewTask(task string, args []string, kwargs map[string]interface{}) (*Task, 
 // time objects are converted to UTC and formatted in ISO8601
 func (t *Task) MarshalJSON() ([]byte, error) {
 	type FormattedTask struct {
-		Task    string                 `json:"task"`
-		Id      string                 `json:"id"`
-		Args    []string               `json:"args"`
-		KWArgs  map[string]interface{} `json:"kwargs"`
-		Retries int                    `json:"retries,omitempty"`
-		ETA     string                 `json:"eta,omitempty"`
-		Expires string                 `json:"expires,omitempty"`
+		Task      string                 `json:"task"`
+		Id        string                 `json:"id"`
+		Args      []string               `json:"args"`
+		Timelimit []string               `json:"timelimit"`
+		KWArgs    map[string]interface{} `json:"kwargs"`
+		Retries   int                    `json:"retries,omitempty"`
+		ETA       string                 `json:"eta,omitempty"`
+		Expires   string                 `json:"expires,omitempty"`
 	}
 
 	out := FormattedTask{
-		Task:    t.Task,
-		Id:      t.Id,
-		Args:    t.Args,
-		KWArgs:  t.KWArgs,
-		Retries: t.Retries,
+		Task:      t.Task,
+		Id:        t.Id,
+		Args:      t.Args,
+		KWArgs:    t.KWArgs,
+		Retries:   t.Retries,
+		Timelimit: t.Timelimit,
 	}
 
 	if !t.ETA.IsZero() {
