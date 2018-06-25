@@ -25,7 +25,7 @@ type Task struct {
 	Task      string
 	Id        string
 	Args      []string
-	Timelimit []string
+	Timelimit []*string
 	KWArgs    map[string]interface{}
 	Retries   int
 	ETA       time.Time
@@ -58,7 +58,7 @@ func (t *Task) MarshalJSON() ([]byte, error) {
 		Task      string                 `json:"task"`
 		Id        string                 `json:"id"`
 		Args      []string               `json:"args"`
-		Timelimit []string               `json:"timelimit"`
+		Timelimit []*string              `json:"timelimit"`
 		KWArgs    map[string]interface{} `json:"kwargs"`
 		Retries   int                    `json:"retries,omitempty"`
 		ETA       string                 `json:"eta,omitempty"`
@@ -75,7 +75,7 @@ func (t *Task) MarshalJSON() ([]byte, error) {
 	}
 
 	if t.Timelimit == nil {
-		out.Timelimit = []string{}
+		out.Timelimit = []*string{nil, nil}
 	}
 
 	if !t.ETA.IsZero() {
