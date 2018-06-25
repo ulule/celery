@@ -74,6 +74,10 @@ func (t *Task) MarshalJSON() ([]byte, error) {
 		Timelimit: t.Timelimit,
 	}
 
+	if t.Timelimit == nil {
+		out.Timelimit = []string{}
+	}
+
 	if !t.ETA.IsZero() {
 		out.ETA = t.ETA.UTC().Format(timeFormat)
 	}
