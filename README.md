@@ -5,17 +5,17 @@ Golang client library for calling Celery tasks - http://www.celeryproject.org
 
 It currently support AMQP brokers and depends on http://github.com/streadway/amqp
 
-[![GoDoc](https://godoc.org/github.com/bsphere/celery?status.png)](https://godoc.org/github.com/bsphere/celery)
+[![GoDoc](https://godoc.org/github.com/ulule/celery?status.png)](https://godoc.org/github.com/ulule/celery)
 
 Usage
 -----
-Installation: `go get github.com/bsphere/celery`
+Installation: `go get github.com/ulule/celery`
 
 Use http://github.com/streadway/amqp and open a connection and get a channel.
 
 ```go
 import (
-	"github.com/bsphere/celery"
+	"github.com/ulule/celery"
 	"github.com/streadway/amqp"
 
 func main() {
