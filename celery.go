@@ -9,7 +9,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/nu7hatch/gouuid"
+	uuid "github.com/satori/go.uuid"
 	"github.com/streadway/amqp"
 )
 
@@ -23,7 +23,7 @@ import (
 // Expires - optional time for task expiration
 type Task struct {
 	Task      string
-	Id        string
+	ID        string
 	Args      []string
 	Timelimit []*string
 	KWArgs    map[string]interface{}
@@ -34,7 +34,7 @@ type Task struct {
 
 const timeFormat = "2006-01-02T15:04:05.999999"
 
-// Returns a pointer to a new task object
+// NewTask returns a pointer to a new task object
 func NewTask(task string, args []string, kwargs map[string]interface{}) (*Task, error) {
 	id, err := uuid.NewV4()
 	if err != nil {
@@ -43,7 +43,7 @@ func NewTask(task string, args []string, kwargs map[string]interface{}) (*Task, 
 
 	t := Task{
 		Task:   task,
-		Id:     id.String(),
+		ID:     id.String(),
 		Args:   args,
 		KWArgs: kwargs,
 	}
@@ -51,12 +51,12 @@ func NewTask(task string, args []string, kwargs map[string]interface{}) (*Task, 
 	return &t, nil
 }
 
-// Marshals a Task object into JSON bytes array,
+// MarshalJSON marshals a Task object into JSON bytes array,
 // time objects are converted to UTC and formatted in ISO8601
 func (t *Task) MarshalJSON() ([]byte, error) {
 	type FormattedTask struct {
 		Task      string                 `json:"task"`
-		Id        string                 `json:"id"`
+		ID        string                 `json:"id"`
 		Args      []string               `json:"args"`
 		Timelimit []*string              `json:"timelimit"`
 		KWArgs    map[string]interface{} `json:"kwargs"`
@@ -67,7 +67,7 @@ func (t *Task) MarshalJSON() ([]byte, error) {
 
 	out := FormattedTask{
 		Task:      t.Task,
-		Id:        t.Id,
+		ID:        t.ID,
 		Args:      t.Args,
 		KWArgs:    t.KWArgs,
 		Retries:   t.Retries,

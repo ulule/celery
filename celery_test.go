@@ -7,13 +7,14 @@ import (
 	"time"
 )
 
+// nolint: gocyclo
 func TestNewTask(t *testing.T) {
 	x, err := NewTask("task name", nil, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if x.Id == "" {
+	if x.ID == "" {
 		t.Fail()
 	}
 
@@ -43,6 +44,9 @@ func TestNewTask(t *testing.T) {
 	kwargs["2"] = 3
 
 	x, err = NewTask("task name", args, kwargs)
+	if err != nil {
+		t.Fail()
+	}
 
 	if !reflect.DeepEqual(x.Args, args) {
 		t.Fail()
@@ -53,6 +57,7 @@ func TestNewTask(t *testing.T) {
 	}
 }
 
+// nolint: gocyclo
 func TestMarshalJson(t *testing.T) {
 	x, err := NewTask("task name", nil, nil)
 	if err != nil {
@@ -66,7 +71,7 @@ func TestMarshalJson(t *testing.T) {
 
 	result := struct {
 		Task    string                  `json:"task"`
-		Id      string                  `json:"id"`
+		ID      string                  `json:"id"`
 		Args    *[]string               `json:"args"`
 		KWArgs  *map[string]interface{} `json:"kwargs"`
 		Retries *int                    `json:"retries"`
@@ -83,7 +88,7 @@ func TestMarshalJson(t *testing.T) {
 		t.Fail()
 	}
 
-	if result.Id == "" {
+	if result.ID == "" {
 		t.Fail()
 	}
 
