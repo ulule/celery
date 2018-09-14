@@ -13,7 +13,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
-// Celery task representation,
+// Task is a celery task representation:
 // Task - task name,
 // Id - task UUID,
 // Args - optional task args,
